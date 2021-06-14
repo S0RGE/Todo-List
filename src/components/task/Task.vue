@@ -8,22 +8,24 @@
       color="deep-purple accent-4"
     >
       <v-app-bar-nav-icon @click="$emit('toggleTaskList')"></v-app-bar-nav-icon>
-
       <v-toolbar-title>My TaskList</v-toolbar-title>
-
       <v-spacer></v-spacer>
-
+       <v-text-field
+            class="mt-4"
+            v-model="taskFind"
+            label="Find Task"
+          ></v-text-field>
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
     </v-app-bar>
-
     <v-container>
       <v-row dense>
         <v-col
-          v-for="(item, i) in items"
+          v-for="(item, i) in sortedTasks"
           :key="i"
-          cols="12"
+          cols="10"
+          class="mx-auto"
         >
           <v-card
             dark
@@ -35,9 +37,7 @@
                   class="text-h5"
                   v-text="item.title"
                 ></v-card-title>
-
                 <v-card-subtitle v-text="item.description"></v-card-subtitle>
-
                 <v-card-actions>
                   <v-btn
                     class="ml-2 mt-5"
@@ -49,7 +49,6 @@
                   </v-btn>
                 </v-card-actions>
               </div>
-
               <v-avatar
                 class="ma-3"
                 size="125"
@@ -60,7 +59,7 @@
             </div>
           </v-card>
         </v-col>
-        <v-col cols="12">
+        <v-col cols="10" class="mx-auto">
         <v-btn dark
           @click="dialog = !dialog"
              color="deep-purple accent-4" width="100%">Add task</v-btn>
@@ -97,6 +96,7 @@ import TaskEdit from './TaskEdit.vue'
 export default {
   data: () => ({
     dialog: false,
+    taskFind: '',
     items: [
       {
         color: '#1F7087',
@@ -124,7 +124,7 @@ export default {
       },
       {
         color: '#952175',
-        src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
+        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
         title: 'Task',
         description: 'Task description'
       }
@@ -136,6 +136,11 @@ export default {
   methods: {
     closeForm () {
       this.dialog = false
+    }
+  },
+  computed: {
+    sortedTasks () {
+      return this.items.filter(item => item.title.toLowerCase().includes(this.taskFind.toLowerCase()))
     }
   }
 }

@@ -16,8 +16,8 @@
           cols="12"
         >
           <v-text-field
-            v-model="taskText"
-            label="Task Text"
+            v-model="taskDescription"
+            label="Task Description"
             required
           ></v-text-field>
         </v-col>
@@ -41,7 +41,7 @@ export default {
   data: () => ({
     valid: false,
     taskName: '',
-    taskText: ''
+    taskDescription: ''
   }),
   methods: {
     closeForm () {
