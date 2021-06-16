@@ -50,7 +50,6 @@ export default {
   },
   methods: {
     editTask () {
-      console.log('id', this.id)
       this.$emit('addTask', { taskName: this.taskName, taskDescription: this.taskDescription, id: this.id })
       this.taskName = this.taskDescription = ''
       this.closeForm()

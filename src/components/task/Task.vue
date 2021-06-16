@@ -65,7 +65,7 @@
                 size="125"
                 tile
               >
-                <v-img :src="item.src"></v-img>
+                <v-img @click="editPicture()" style="cursor: pointer" :src="item.src"></v-img>
               </v-avatar>
             </div>
           </v-card>
@@ -116,32 +116,37 @@ export default {
         {
           color: '#1F7087',
           src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-          title: 'Task',
-          description: 'Task description'
+          title: '111',
+          description: 'Task description',
+          list: 'first'
         },
         {
           color: '#952175',
           src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-          title: 'Task',
-          description: 'Task description'
+          title: '222',
+          description: 'Task description',
+          list: 'second'
         },
         {
           color: '#952175',
           src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-          title: 'Task',
-          description: 'Task description'
+          title: '333',
+          description: 'Task description',
+          list: 'third'
         },
         {
           color: '#952175',
           src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-          title: 'Task',
-          description: 'Task description'
+          title: 'www',
+          description: 'Task description',
+          list: 'second'
         },
         {
           color: '#952175',
           src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-          title: 'Task',
-          description: 'Task description'
+          title: 'tyty',
+          description: 'Task description',
+          list: 'first'
         }
       ]
     }
@@ -161,6 +166,9 @@ export default {
     deleteTask (id) {
       this.items.splice(id, 1)
     },
+    editPicture () {
+      console.error('not implement exeption')
+    },
     addTask (task) {
       const newItem = {
         color: '#952175',
@@ -169,10 +177,8 @@ export default {
         description: task.taskDescription
       }
       if (this.id !== null) {
-        console.log('edit task')
         this.items.splice(this.id, 1, newItem)
       } else {
-        console.log('add task')
         this.items.push(newItem)
       }
     }

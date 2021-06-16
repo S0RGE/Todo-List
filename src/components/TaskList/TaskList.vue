@@ -20,26 +20,28 @@
 
 <script>
 export default {
-  data: () => ({
-    items: [
-      {
-        icon: 'mdi-inbox',
-        text: 'Inbox'
-      },
-      {
-        icon: 'mdi-star',
-        text: 'Star'
-      },
-      {
-        icon: 'mdi-send',
-        text: 'Send'
-      },
-      {
-        icon: 'mdi-email-open',
-        text: 'Drafts'
-      }
-    ],
-    model: 1
-  })
+  data () {
+    return {
+      items: [
+        {
+          icon: 'mdi-inbox',
+          text: 'first'
+        },
+        {
+          icon: 'mdi-inbox',
+          text: 'second'
+        },
+        {
+          icon: 'mdi-inbox',
+          text: 'third'
+        },
+        {
+          icon: 'mdi-inbox',
+          text: 'forth'
+        }
+      ],
+      model: 1
+    }
+  }
 }
 </script>
