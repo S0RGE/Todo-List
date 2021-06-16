@@ -1,13 +1,18 @@
 <template>
-  <v-form v-model="valid">
+  <v-form v-model="valid" >
+     <v-card
+      class="mx-auto my-4"
+      max-width="400"
+  >
     <v-container>
       <v-row>
         <v-col
           cols="12"
         >
           <v-text-field
-            v-model="login"
-            label="First name"
+            v-model="email"
+            outlined
+            label="E-mail"
             required
           ></v-text-field>
         </v-col>
@@ -16,15 +21,17 @@
         >
           <v-text-field
             v-model="password"
+            outlined
             label="Password"
             required
           ></v-text-field>
         </v-col>
-      </v-row>
-      <v-btn dark>
+        <v-btn class="ma-3" dark @click="login">
           Login
       </v-btn>
+      </v-row>
     </v-container>
+    </v-card>
   </v-form>
 </template>
 
@@ -32,8 +39,21 @@
 export default {
   data: () => ({
     valid: false,
-    login: '',
+    email: '',
     password: ''
-  })
+  }),
+  methods: {
+    async login () {
+      const userData = {
+        email: this.email,
+        password: this.password
+      }
+
+      try {
+        await this.$store.dispatch('login', userData)
+        this.$router.push('/')
+      } catch (e) {}
+    }
+  }
 }
 </script>

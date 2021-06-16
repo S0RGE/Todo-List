@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-navigation-drawer
-      v-model="drawer"
+      v-model="navigate"
       absolute
       temporary
       >
@@ -27,7 +27,7 @@ export default {
   name: 'App',
   data () {
     return {
-      drawer: false
+      navigate: false
     }
   },
   components: {
@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     toggleTaskList () {
-      this.drawer = !this.drawer
+      this.navigate = !this.navigate
     }
   }
 }

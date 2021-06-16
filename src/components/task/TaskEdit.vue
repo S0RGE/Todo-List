@@ -24,7 +24,7 @@
         <v-col
           cols="6"
         >
-          <v-btn @click="closeForm()" dark width="100%" color="deep-purple accent-4">Save</v-btn>
+          <v-btn @click="editTask()" dark width="100%" color="deep-purple accent-4">Save</v-btn>
         </v-col>
         <v-col
           cols="6"
@@ -38,12 +38,23 @@
 
 <script>
 export default {
-  data: () => ({
-    valid: false,
-    taskName: '',
-    taskDescription: ''
-  }),
+  props: [
+    'id'
+  ],
+  data () {
+    return {
+      valid: false,
+      taskName: '',
+      taskDescription: ''
+    }
+  },
   methods: {
+    editTask () {
+      console.log('id', this.id)
+      this.$emit('addTask', { taskName: this.taskName, taskDescription: this.taskDescription, id: this.id })
+      this.taskName = this.taskDescription = ''
+      this.closeForm()
+    },
     closeForm () {
       this.$emit('closeForm')
     }

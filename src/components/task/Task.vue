@@ -44,12 +44,23 @@
                     outlined
                     rounded
                     small
+                    @click="editTask(i)"
                   >
                     Edit task
+                  </v-btn>
+                  <v-btn
+                    class="ml-2 mt-5"
+                    outlined
+                    rounded
+                    small
+                    @click="deleteTask(i)"
+                  >
+                    Delete Task
                   </v-btn>
                 </v-card-actions>
               </div>
               <v-avatar
+                v-if="$vuetify.breakpoint.name !== 'xs' && $vuetify.breakpoint.name !== 'sm'"
                 class="ma-3"
                 size="125"
                 tile
@@ -80,7 +91,9 @@
             >Edit Task</v-toolbar>
             <v-card-text>
               <TaskEdit
+                :id="id"
                 @closeForm="closeForm()"
+                @addTask="addTask"
               />
             </v-card-text>
           </v-card>
@@ -94,53 +107,79 @@
 import TaskEdit from './TaskEdit.vue'
 
 export default {
-  data: () => ({
-    dialog: false,
-    taskFind: '',
-    items: [
-      {
-        color: '#1F7087',
-        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-        title: 'Task',
-        description: 'Task description'
-      },
-      {
-        color: '#952175',
-        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-        title: 'Task',
-        description: 'Task description'
-      },
-      {
-        color: '#952175',
-        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-        title: 'Task',
-        description: 'Task description'
-      },
-      {
-        color: '#952175',
-        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-        title: 'Task',
-        description: 'Task description'
-      },
-      {
-        color: '#952175',
-        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-        title: 'Task',
-        description: 'Task description'
-      }
-    ]
-  }),
+  data () {
+    return {
+      id: null,
+      dialog: false,
+      taskFind: '',
+      items: [
+        {
+          color: '#1F7087',
+          src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
+          title: 'Task',
+          description: 'Task description'
+        },
+        {
+          color: '#952175',
+          src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
+          title: 'Task',
+          description: 'Task description'
+        },
+        {
+          color: '#952175',
+          src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
+          title: 'Task',
+          description: 'Task description'
+        },
+        {
+          color: '#952175',
+          src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
+          title: 'Task',
+          description: 'Task description'
+        },
+        {
+          color: '#952175',
+          src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
+          title: 'Task',
+          description: 'Task description'
+        }
+      ]
+    }
+  },
   components: {
     TaskEdit
   },
   methods: {
+    editTask (i) {
+      this.id = i
+      this.dialog = true
+    },
     closeForm () {
+      this.id = null
       this.dialog = false
+    },
+    deleteTask (id) {
+      this.items.splice(id, 1)
+    },
+    addTask (task) {
+      const newItem = {
+        color: '#952175',
+        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
+        title: task.taskName,
+        description: task.taskDescription
+      }
+      if (this.id !== null) {
+        console.log('edit task')
+        this.items.splice(this.id, 1, newItem)
+      } else {
+        console.log('add task')
+        this.items.push(newItem)
+      }
     }
   },
   computed: {
     sortedTasks () {
-      return this.items.filter(item => item.title.toLowerCase().includes(this.taskFind.toLowerCase()))
+      return this.items.filter(item => item.title?.toLowerCase().includes(this.taskFind.toLowerCase()))
     }
   }
 }
