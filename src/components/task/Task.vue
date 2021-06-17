@@ -160,7 +160,6 @@ export default {
   methods: {
     async logout () {
       await this.$store.dispatch('logout')
-      localStorage.isAunthentificated = false
       this.$router.push({ name: 'Login' })
     },
     editTask (i) {
