@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+
 export default {
   data: () => ({
     valid: false,
@@ -48,11 +50,12 @@ export default {
         email: this.email,
         password: this.password
       }
-
       try {
         await this.$store.dispatch('login', userData)
+        localStorage.isAunthentificated = true
         this.$router.push('/')
       } catch (e) {}
+      console.log('firebase', firebase.auth())
     }
   }
 }

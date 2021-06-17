@@ -8,7 +8,7 @@
       color="deep-purple accent-4"
     >
       <v-app-bar-nav-icon @click="$emit('toggleTaskList')"></v-app-bar-nav-icon>
-      <v-toolbar-title>My TaskList</v-toolbar-title>
+      <v-toolbar-title v-if="$vuetify.breakpoint.name !== 'xs'">My TaskList</v-toolbar-title>
       <v-spacer></v-spacer>
        <v-text-field
             class="mt-4"
@@ -17,6 +17,9 @@
           ></v-text-field>
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+      <v-btn icon @click="logout()">
+        <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
     <v-container>
@@ -155,6 +158,11 @@ export default {
     TaskEdit
   },
   methods: {
+    async logout () {
+      await this.$store.dispatch('logout')
+      localStorage.isAunthentificated = false
+      this.$router.push({ name: 'Login' })
+    },
     editTask (i) {
       this.id = i
       this.dialog = true
