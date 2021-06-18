@@ -16,6 +16,7 @@
       max-width="400"
   >
     <v-container>
+      <v-form>
       <v-row>
         <v-col
           cols="12"
@@ -24,12 +25,14 @@
             v-model="email"
             outlined
             label="E-mail"
+            hide-details="auto"
           ></v-text-field>
         </v-col>
         <v-col
           cols="12"
         >
           <v-text-field
+          hide-details="auto"
             v-model="password"
             type="password"
             outlined
@@ -40,6 +43,7 @@
           Login
       </v-btn>
       </v-row>
+      </v-form>
     </v-container>
     </v-card>
       </v-tab-item>
@@ -49,33 +53,47 @@
       <v-card
       class="mx-auto my-4"
       max-width="400">
+      <v-form>
           <v-card-text>
             <v-row>
               <v-col cols="12">
                 <v-text-field
                 v-model="email"
                 outlined
-                label="Email"></v-text-field>
+                label="Email"
+                hide-details="auto"
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field
+                hide-details="auto"
                 v-model="password"
                 type="password"
                 outlined
                 label="Password"
                 ></v-text-field>
-              </v-col><v-col cols="12">
+              </v-col>
+              <v-col cols="12">
                 <v-text-field
+                hide-details="auto"
                 outlined
                 label="Name"
                 v-model="name"
                 ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-checkbox
+                outlined
+                label="Agree the statement"
+                v-model="agreeTheStatement"
+                ></v-checkbox>
               </v-col>
             </v-row>
           </v-card-text>
           <v-card-actions>
             <v-btn class="ma-3"  @click="register()" dark rounded>Register</v-btn>
           </v-card-actions>
+          </v-form>
         </v-card>
       </v-tab-item>
     </v-tabs-items>
@@ -90,6 +108,7 @@ export default {
     valid: false,
     email: '',
     password: '',
+    agreeTheStatement: '',
     regDialog: false
   }),
   methods: {
@@ -103,13 +122,15 @@ export default {
         this.$router.push('/')
       } catch (e) {}
     },
-    register () {
+    async register () {
       const newUser = {
         email: this.email,
         password: this.password,
         name: this.name
       }
-      this.$store.dispatch('register', newUser)
+      try {
+        await this.$store.dispatch('register', newUser)
+      } catch (e) {}
     }
   }
 }
