@@ -3,8 +3,10 @@ const execa = require("execa");
 const fs = require("fs");
 
 (async () => {
-  try {
-    await execa("git", ["checkout", "gh-pages"]);
+  try {    
+    // await execa("git", ["push", "origin", "--delete", "gh-pages"]);
+    // await execa("git", ["branch", "-D", "gh-pages"]);
+    await execa("git", ["checkout", "--orphan", "gh-pages"]);
     console.log("Building...");
     await execa("npm", ["run", "build"]);
     // Understand if it's dist or build folder
