@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+  <v-card>
     <v-list>
       <v-list-item-group v-model="model">
         <v-list-item
@@ -15,6 +15,10 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
+    <v-card-actions>
+      <v-text-field label="Add Task List" width="90%"></v-text-field>
+      <v-btn dark rounded>Ok</v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
