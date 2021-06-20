@@ -13,12 +13,12 @@ const routes = [
   {
     path: '/task',
     name: 'Task',
-    component: () => import('../components/task/Task.vue')
+    component: () => import('@/components/task/Task.vue')
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue')
+    component: () => import('@/views/Login.vue')
   }
 ]
 

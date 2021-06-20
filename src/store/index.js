@@ -1,17 +1,27 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Auth from './auth'
+import TaskList from './taskList'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    error: null
   },
   mutations: {
+    setError (state, error) {
+      state.error = error
+    },
+    clearError (state) {
+      state.error = null
+    }
   },
-  actions: {
+  getters: {
+    error: s => s.error
   },
   modules: {
-    Auth
+    Auth,
+    TaskList
   }
 })
