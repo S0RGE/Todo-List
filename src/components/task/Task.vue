@@ -195,12 +195,16 @@ export default {
         color: '#952175',
         src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
         title: task.taskName,
-        description: task.taskDescription
+        description: task.taskDescription,
+        priority: task.priority,
+        isDone: false,
+        list: 'qweqweqwe'
       }
       if (this.id !== null) {
         this.items.splice(this.id, 1, newItem)
       } else {
         this.items.push(newItem)
+        this.$store.dispatch('addTodoTask', newItem)
       }
     }
   },

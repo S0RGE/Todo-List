@@ -140,7 +140,6 @@ export default {
       this.agreeTheStatement = false
     },
     async login () {
-      // if (this.email.trim() === '' || this.password.trim() === '') return
       const userData = {
         email: this.email,
         password: this.password
@@ -152,7 +151,6 @@ export default {
       } catch (e) {}
     },
     async register () {
-      // if (this.name.trim() === '' || this.password.trim() === '' || this.agreeTheStatement || this.email.trim() === '') return
       const newUser = {
         email: this.email,
         password: this.password,

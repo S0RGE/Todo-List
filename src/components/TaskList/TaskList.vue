@@ -1,4 +1,5 @@
 <template>
+<v-container>
     <v-card>
       <v-list>
         <v-text-field
@@ -50,9 +51,11 @@
       >Add List</v-btn>
     </v-card-actions>
   </v-card>
+</v-container>
 </template>
 
 <script>
+
 export default {
   data () {
     return {
@@ -85,7 +88,7 @@ export default {
         icon: 'mdi-inbox',
         text: this.taskList
       })
-      // this.$store.dispatch('addTodoList', this.taskList)
+      this.$store.dispatch('addTodoList', this.taskList)
       this.taskList = ''
     }
   },

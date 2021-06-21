@@ -11,7 +11,6 @@
             required
           ></v-text-field>
         </v-col>
-
         <v-col
           cols="12"
         >
@@ -21,6 +20,14 @@
             required
           ></v-text-field>
         </v-col>
+         <v-col
+          cols="12"
+        >
+         <v-checkbox
+      v-model="priority"
+      label="Priority"
+    ></v-checkbox>
+    </v-col>
         <v-col
           cols="6"
         >
@@ -45,13 +52,15 @@ export default {
     return {
       valid: false,
       taskName: '',
-      taskDescription: ''
+      taskDescription: '',
+      priority: false
     }
   },
   methods: {
     editTask () {
-      this.$emit('addTask', { taskName: this.taskName, taskDescription: this.taskDescription, id: this.id })
+      this.$emit('addTask', { taskName: this.taskName, taskDescription: this.taskDescription, id: this.id, priority: this.priority })
       this.taskName = this.taskDescription = ''
+      this.priority = false
       this.closeForm()
     },
     closeForm () {

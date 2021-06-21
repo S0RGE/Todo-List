@@ -6,7 +6,7 @@ export default {
     async addTodoList({ dispatch, commit }, list ){
       try{
         const uid = await dispatch('getUid')
-        await firebase.database().ref('/lists').set({
+        await firebase.database().ref(`/user/${uid}/lists/${list}`).set({
             name: list,
             count: 0,
             userId: uid,
