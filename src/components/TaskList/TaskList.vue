@@ -1,9 +1,22 @@
 <template>
     <v-card>
       <v-list>
+        <v-text-field
+        label="Find Task List"
+        class="mx-2"
+        v-model="searchField"
+        >
+        <v-icon
+        v-if="searchField"
+        slot="append"
+        @click="searchField = ''"
+        >
+        mdi-close
+        </v-icon>
+        </v-text-field>
         <v-list-item-group v-model="model" max-height>
           <v-list-item
-            v-for="(item, i) in items"
+            v-for="(item, i) in searchResults"
             :key="i"
           >
             <v-list-item-icon>
@@ -19,7 +32,15 @@
       label="Add Task List"
       class="mx-2"
       v-model="taskList"
-      ></v-text-field>
+      >
+       <v-icon
+        v-if="taskList"
+        slot="append"
+        @click="taskList = ''"
+        >
+        mdi-close
+        </v-icon>
+        </v-text-field>
     <v-card-actions>
       <v-btn
       @click="addTaskList()"
@@ -54,7 +75,8 @@ export default {
         }
       ],
       model: 1,
-      taskList: ''
+      taskList: '',
+      searchField: ''
     }
   },
   methods: {
@@ -65,6 +87,11 @@ export default {
       })
       // this.$store.dispatch('addTodoList', this.taskList)
       this.taskList = ''
+    }
+  },
+  computed: {
+    searchResults () {
+      return this.items.filter(item => item.text?.toLowerCase().includes(this.searchField.toLowerCase()))
     }
   }
 }

@@ -14,7 +14,15 @@
             class="mt-4"
             v-model="taskFind"
             label="Find Task"
-          ></v-text-field>
+          >
+          <v-icon
+            v-if="taskFind"
+            slot="append"
+            @click="taskFind = ''"
+            >
+            mdi-close
+            </v-icon>
+          </v-text-field>
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
@@ -38,6 +46,7 @@
               <div>
                 <v-card-title
                   class="text-h5"
+                  :class="{ priorityItem: item.priority }"
                   v-text="item.title"
                 ></v-card-title>
                 <v-card-subtitle v-text="item.description"></v-card-subtitle>
@@ -121,35 +130,40 @@ export default {
           src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
           title: '111',
           description: 'Task description',
-          list: 'first'
+          list: 'first',
+          priority: true
         },
         {
           color: '#952175',
           src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
           title: '222',
           description: 'Task description',
-          list: 'second'
+          list: 'second',
+          priority: false
         },
         {
           color: '#952175',
           src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
           title: '333',
           description: 'Task description',
-          list: 'third'
+          list: 'third',
+          priority: true
         },
         {
           color: '#952175',
           src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
           title: 'www',
           description: 'Task description',
-          list: 'second'
+          list: 'second',
+          priority: false
         },
         {
           color: '#952175',
           src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
           title: 'tyty',
           description: 'Task description',
-          list: 'first'
+          list: 'first',
+          priority: true
         }
       ]
     }
@@ -197,3 +211,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.priorityItem {
+  color: red;
+}
+</style>

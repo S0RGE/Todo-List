@@ -2,7 +2,7 @@
 import firebase from 'firebase/app'
 
 export default {
-  actions: {   
+  actions: {
     async addTodoList({ dispatch, commit }, list ){
       try{
         const uid = await dispatch('getUid')
@@ -17,6 +17,6 @@ export default {
       } catch (e){
         throw e
       }
-    }   
+    }
   }
 }

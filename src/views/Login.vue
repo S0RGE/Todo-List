@@ -32,14 +32,14 @@
           cols="12"
         >
           <v-text-field
-          hide-details="auto"
+            hide-details="auto"
             v-model="password"
             type="password"
             outlined
             label="Password"
           ></v-text-field>
         </v-col>
-        <v-btn rounded class="ma-3" dark @click="login">
+        <v-btn color="deep-purple accent-4" class="ma-3" dark @click="login">
           Login
       </v-btn>
       </v-row>
@@ -94,7 +94,7 @@
             </v-row>
           </v-card-text>
           <v-card-actions>
-            <v-btn class="ma-3"  @click="register()" dark rounded>Register</v-btn>
+            <v-btn class="ma-3" color="deep-purple accent-4" @click="register()" dark>Register</v-btn>
           </v-card-actions>
           </v-form>
         </v-card>
