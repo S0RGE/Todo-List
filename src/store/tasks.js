@@ -2,11 +2,14 @@
 import firebase from 'firebase/app'
 
 export default {
+  state: {
+    tasks: []
+  },
   actions: {
     async addTodoTask({ dispatch, commit }, task ){
       try{
         const uid = await dispatch('getUid')
-        await firebase.database().ref(`/user/${uid}/lists/${task.list}/tasks/`).set({
+        await firebase.database().ref(`/user/${uid}/lists/${task.list}/tasks`).set({
             name: task.title,
             isDone: false,
             created: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
@@ -25,6 +28,19 @@ export default {
       } catch (e){
         throw e
       }
+    },
+    async getTasksByList({ dispatch, commit }, list ){
+      try{
+        const uid = await dispatch('getUid')
+        const tasks = (await firebase.database().ref(`/user/${uid}/lists/${list}/tasks`).once('value')).val()
+        commit('setTasks', tasks)
+        console.log('get task by list', tasks);
+      } catch (e){
+        throw e
+      }
     }
+  },
+  getters : {
+    getTasks: t => t.tasks
   }
 }

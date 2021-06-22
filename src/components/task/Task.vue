@@ -9,6 +9,7 @@
     >
       <v-app-bar-nav-icon @click="$emit('toggleTaskList')"></v-app-bar-nav-icon>
       <v-toolbar-title v-if="$vuetify.breakpoint.name !== 'xs'">My TaskList</v-toolbar-title>
+      <v-btn @click="getData()"> Get Data</v-btn>
       <v-spacer></v-spacer>
        <v-text-field
             class="mt-4"
@@ -172,6 +173,9 @@ export default {
     TaskEdit
   },
   methods: {
+    async getData () {
+      await this.$store.dispatch('getTasksByList', 'qweqweqwe')
+    },
     async logout () {
       await this.$store.dispatch('logout')
       this.$router.push({ name: 'Login' })

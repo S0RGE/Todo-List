@@ -16,6 +16,9 @@ export default new Vuex.Store({
     },
     clearError (state) {
       state.error = null
+    },
+    setTasks (state, tasks) {
+      state.tasks = tasks
     }
   },
   getters: {
