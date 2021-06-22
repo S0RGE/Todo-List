@@ -210,7 +210,12 @@ export default {
   },
   computed: {
     sortedTasks () {
-      return this.items.filter(item => item.title?.toLowerCase().includes(this.taskFind.toLowerCase()))
+      return this.items.filter(item =>
+        item.list === this.$route.params.id)
+      // &&
+      // (item.title?.toLowerCase()
+      // .includes(this.taskFind.toLowerCase())
+      // )
     }
   }
 }

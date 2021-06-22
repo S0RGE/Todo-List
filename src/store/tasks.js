@@ -16,6 +16,12 @@ export default {
             color: task.color,
             src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU'
         })
+        // Update tasklist isDone, count, updated
+        // await firebase.database().ref(`/user/${uid}/lists/${task.list}/tasks/`).set({
+        // isDone: false,
+        // update: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+        // count: taskList.count++
+        // })
       } catch (e){
         throw e
       }

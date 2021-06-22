@@ -24,7 +24,10 @@
               <v-icon v-text="item.icon"></v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title v-text="item.text"></v-list-item-title>
+              <!-- <v-list-item-title v-text="item.text"></v-list-item-title> -->
+              <router-link
+                :to="{name: 'TaskId', params: {id: item.text}}"
+              > {{ item.text }} </router-link>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
