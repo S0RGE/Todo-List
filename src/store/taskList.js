@@ -2,6 +2,14 @@
 import firebase from 'firebase/app'
 
 export default {
+  state: {
+    taskList: []
+  },
+  mutations: {
+    setTaskLists(state, taskList){
+      state.taskList = taskList
+    }
+  },
   actions: {
     async addTodoList({ dispatch, commit }, list ){
       try{
@@ -17,6 +25,19 @@ export default {
       } catch (e){
         throw e
       }
+    },
+    async getTaskListByUser({ dispatch, commit }){
+      try{
+        const uid = await dispatch('getUid')
+        const taskList = (await firebase.database().ref(`/user/${uid}/lists`).once('value')).val()
+        console.log('getTaskListByUser', taskList)
+        commit('setTaskLists', taskList)
+      } catch (e){
+        throw e
+      }
     }
+  },
+  getters: {
+    getTaskList: s => Object.keys(s.taskList)
   }
 }

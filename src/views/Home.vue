@@ -5,7 +5,9 @@
       absolute
       temporary
       >
-      <TaskList />
+      <TaskList
+        :tasksList="tasksList"
+      />
     </v-navigation-drawer>
     <v-main>
      <Task
@@ -27,6 +29,7 @@ export default {
   name: 'App',
   data () {
     return {
+      tasksList: [],
       navigate: false
     }
   },
@@ -39,6 +42,10 @@ export default {
     toggleTaskList () {
       this.navigate = !this.navigate
     }
+  },
+  async mounted () {
+    await this.$store.dispatch('getTaskListByUser')
+    this.tasksList = this.$store.getters.getTaskList
   }
 }
 </script>

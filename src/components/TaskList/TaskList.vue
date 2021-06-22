@@ -20,14 +20,19 @@
             v-for="(item, i) in searchResults"
             :key="i"
           >
-            <v-list-item-icon>
+            <!-- <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
-            </v-list-item-icon>
+            </v-list-item-icon> -->
             <v-list-item-content>
-              <!-- <v-list-item-title v-text="item.text"></v-list-item-title> -->
               <router-link
-                :to="{name: 'TaskId', params: {id: item.text}}"
-              > {{ item.text }} </router-link>
+                :to="{name: 'TaskId', params: {id: item}}"
+              >
+              <v-btn
+              width="100%"
+              dark
+              color="deep-purple accent-4"
+              >{{ item }} </v-btn>
+              </router-link>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
@@ -60,26 +65,10 @@
 <script>
 
 export default {
+  props: ['tasksList'],
   data () {
     return {
-      items: [
-        {
-          icon: 'mdi-inbox',
-          text: 'first'
-        },
-        {
-          icon: 'mdi-inbox',
-          text: 'second'
-        },
-        {
-          icon: 'mdi-inbox',
-          text: 'third'
-        },
-        {
-          icon: 'mdi-inbox',
-          text: 'forth'
-        }
-      ],
+      items: [],
       model: 1,
       taskList: '',
       searchField: ''
@@ -97,7 +86,7 @@ export default {
   },
   computed: {
     searchResults () {
-      return this.items.filter(item => item.text?.toLowerCase().includes(this.searchField.toLowerCase()))
+      return this.tasksList.filter(item => item.toLowerCase().includes(this.searchField.toLowerCase()))
     }
   }
 }

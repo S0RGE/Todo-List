@@ -9,7 +9,7 @@ export default {
     async addTodoTask({ dispatch, commit }, task ){
       try{
         const uid = await dispatch('getUid')
-        await firebase.database().ref(`/user/${uid}/lists/${task.list}/tasks`).set({
+        await firebase.database().ref(`/user/${uid}/lists/${task.list}/tasks/${task.title}`).set({
             name: task.title,
             isDone: false,
             created: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
