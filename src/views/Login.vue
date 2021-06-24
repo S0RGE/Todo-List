@@ -147,7 +147,7 @@ export default {
       try {
         await this.$store.dispatch('login', userData)
         this.$router.push('/')
-        this.email = this.password = ''
+        this.resetFields()
       } catch (e) {}
     },
     async register () {
@@ -158,7 +158,7 @@ export default {
       }
       try {
         await this.$store.dispatch('register', newUser)
-        this.email = this.password = ''
+        this.resetFields()
       } catch (e) {}
     }
   }

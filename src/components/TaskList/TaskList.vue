@@ -25,7 +25,7 @@
             </v-list-item-icon> -->
             <v-list-item-content>
               <router-link
-                :to="{name: 'TaskId', params: {id: item}}"
+                :to="{name: 'TaskId', params: {listName: item}}"
               >
               <v-btn
               width="100%"

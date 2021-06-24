@@ -191,6 +191,7 @@ export default {
       console.error('not implement exeption')
     },
     addTask (task) {
+      console.log('addTask', this.$route.params.listName)
       const newItem = {
         color: '#952175',
         src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
@@ -198,7 +199,7 @@ export default {
         description: task.taskDescription,
         priority: task.priority,
         isDone: false,
-        list: this.$route.id
+        list: this.$route.params.listName
       }
       if (this.id !== null) {
         this.items.splice(this.id, 1, newItem)
