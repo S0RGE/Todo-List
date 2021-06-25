@@ -6,7 +6,11 @@ export default {
     tasks: []
   },
   mutations: {
-    setTasks: (state, tasks) => state.tasks = tasks
+    setTasks: (state, tasks) => state.tasks = tasks,
+    deleteTasks: (state, task) => {
+      const taskId = state.tasks.indexOf(task)
+      state.tasks.splice(taskId, 1)
+    }
   },
   actions: {
     async addTodoTask({ dispatch, commit }, task ){
@@ -24,7 +28,6 @@ export default {
             src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU'
         }
         await firebase.database().ref(`/user/${uid}/tasks/${task.title}`).set(newTask)
-        console.log('addTodoTask',newTask)
         // Update tasklist isDone, count, updated
       } catch (e){
         throw e
@@ -35,6 +38,15 @@ export default {
         const uid = await dispatch('getUid')
         const tasks = (await firebase.database().ref(`/user/${uid}/tasks`).once('value')).val() || []
         commit('setTasks', Object.values(tasks))
+      } catch (e){
+        throw e
+      }
+    },
+    async deleteTaskAsync({dispatch, commit}, task) {
+      try{
+        const uid = await dispatch('getUid')
+        await firebase.database().ref(`/user/${uid}/tasks/${task.title}`).remove()
+        commit('deleteTasks', task)
       } catch (e){
         throw e
       }

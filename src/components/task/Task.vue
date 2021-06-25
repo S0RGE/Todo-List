@@ -65,7 +65,7 @@
                     outlined
                     rounded
                     small
-                    @click="deleteTask(i)"
+                    @click="deleteTask(item)"
                   >
                     Delete Task
                   </v-btn>
@@ -124,7 +124,7 @@ export default {
       id: null,
       dialog: false,
       taskFind: '',
-      items: []
+      tasks: []
     }
   },
   components: {
@@ -143,14 +143,13 @@ export default {
       this.id = null
       this.dialog = false
     },
-    deleteTask (id) {
-      this.items.splice(id, 1)
+    deleteTask (task) {
+      this.$store.dispatch('deleteTaskAsync', task)
     },
     editPicture () {
       console.error('not implement exeption')
     },
     addTask (task) {
-      console.log('addTask', this.$route.params.listName)
       const newItem = {
         color: '#952175',
         src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
@@ -161,20 +160,21 @@ export default {
         list: this.$route.params.listName
       }
       if (this.id !== null) {
-        this.items.splice(this.id, 1, newItem)
+        this.tasks.splice(this.id, 1, newItem)
       } else {
-        this.items.push(newItem)
         this.$store.dispatch('addTodoTask', newItem)
+        this.tasks.push(newItem)
       }
     }
   },
   computed: {
     sortedTasks () {
-      return this.$store.getters.getTasks?.filter(item => item.list === this.$route.params.listName)
+      return this.tasks?.filter(item => item.list === this.$route.params.listName)
     }
   },
-  mounted () {
-    this.$store.dispatch('getTasks')
+  async mounted () {
+    await this.$store.dispatch('getTasks')
+    this.tasks = this.$store.getters.getTasks
   }
 }
 </script>
