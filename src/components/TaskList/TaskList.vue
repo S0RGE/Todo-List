@@ -25,13 +25,13 @@
             </v-list-item-icon> -->
             <v-list-item-content>
               <router-link
-                :to="{name: 'TaskId', params: {listName: item}}"
+                :to="{name: 'TaskId', params: {listName: item.name}}"
               >
               <v-btn
               width="100%"
               dark
               color="deep-purple accent-4"
-              >{{ item }} </v-btn>
+              >{{ item.name }} </v-btn>
               </router-link>
             </v-list-item-content>
           </v-list-item>
@@ -86,7 +86,7 @@ export default {
   },
   computed: {
     searchResults () {
-      return this.tasksList.filter(item => item.toLowerCase().includes(this.searchField.toLowerCase()))
+      return this.tasksList.filter(item => item.name.toLowerCase().includes(this.searchField.toLowerCase()))
     }
   }
 }

@@ -48,7 +48,7 @@
                   class="text-h5"
                   :class="{ priorityItem: item.priority }"
                   v-text="item.title"
-                ></v-card-title>
+                >{{ item.title }}</v-card-title>
                 <v-card-subtitle v-text="item.description"></v-card-subtitle>
                 <v-card-actions>
                   <v-btn
@@ -124,48 +124,7 @@ export default {
       id: null,
       dialog: false,
       taskFind: '',
-      items: [
-        {
-          color: '#1F7087',
-          src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-          title: '111',
-          description: 'Task description',
-          list: 'first',
-          priority: true
-        },
-        {
-          color: '#952175',
-          src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-          title: '222',
-          description: 'Task description',
-          list: 'second',
-          priority: false
-        },
-        {
-          color: '#952175',
-          src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-          title: '333',
-          description: 'Task description',
-          list: 'third',
-          priority: true
-        },
-        {
-          color: '#952175',
-          src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-          title: 'www',
-          description: 'Task description',
-          list: 'second',
-          priority: false
-        },
-        {
-          color: '#952175',
-          src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
-          title: 'tyty',
-          description: 'Task description',
-          list: 'first',
-          priority: true
-        }
-      ]
+      items: []
     }
   },
   components: {
@@ -211,13 +170,11 @@ export default {
   },
   computed: {
     sortedTasks () {
-      return this.items.filter(item =>
-        item.list === this.$route.params.id)
-      // &&
-      // (item.title?.toLowerCase()
-      // .includes(this.taskFind.toLowerCase())
-      // )
+      return this.$store.getters.getTasks?.filter(item => item.list === this.$route.params.listName)
     }
+  },
+  mounted () {
+    this.$store.dispatch('getTasks')
   }
 }
 </script>
