@@ -10,6 +10,12 @@ export default {
     deleteTasks: (state, task) => {
       const taskId = state.tasks.indexOf(task)
       state.tasks.splice(taskId, 1)
+    },
+    updateTask: (state, task) => {
+      console.log('updateTask', task)
+      const taskId = state.tasks.indexOf(task)
+      console.log('updateTaskId', taskId)
+      state.tasks.splice(taskId, 1, task)
     }
   },
   actions: {
@@ -47,6 +53,27 @@ export default {
         const uid = await dispatch('getUid')
         await firebase.database().ref(`/user/${uid}/tasks/${task.title}`).remove()
         commit('deleteTasks', task)
+      } catch (e){
+        throw e
+      }
+    },
+    async editTaskAsync({dispatch, commit}, task ) {
+      console.log('editTaskAsync', task)
+      try{
+        const uid = await dispatch('getUid')
+        const taskToChange = {
+            list: task.list,
+            title: task.title,
+            isDone: task.isDone,
+            created: task.created || new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+            updated: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+            priority: task.priority,
+            description: task.description,
+            color: task.color,
+            src: task.src
+        }
+        await firebase.database().ref(`/user/${uid}/tasks/${task.lastName}`).set(taskToChange)
+        commit('updateTask', task)
       } catch (e){
         throw e
       }

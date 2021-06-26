@@ -147,23 +147,28 @@ export default {
       this.$store.dispatch('deleteTaskAsync', task)
     },
     editPicture () {
-      console.error('not implement exeption')
+      console.error('not implement exception')
     },
     addTask (task) {
-      const newItem = {
-        color: '#952175',
-        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
+      const newTask = {
+        color: task.color || '#952175',
+        src: task.src || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU',
         title: task.taskName,
         description: task.taskDescription,
+        created: task.created || new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
         priority: task.priority,
-        isDone: false,
+        isDone: task.isDone || false, // what is done?
         list: this.$route.params.listName
       }
       if (this.id !== null) {
-        this.tasks.splice(this.id, 1, newItem)
+        newTask.lastName = this.tasks[this.id].title
+        console.log('not null', newTask.lastName)
+        this.$store.dispatch('editTaskAsync', newTask) // Add previous task name to change
+        this.tasks.splice(this.id, 1, newTask)
       } else {
-        this.$store.dispatch('addTodoTask', newItem)
-        this.tasks.push(newItem)
+        console.log('null')
+        this.$store.dispatch('addTodoTask', newTask)
+        this.tasks.push(newTask)
       }
     }
   },
