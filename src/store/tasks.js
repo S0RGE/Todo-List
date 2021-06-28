@@ -23,6 +23,7 @@ export default {
       try{
         const uid = await dispatch('getUid')
         const newTask = {
+            uuid: task.uuid,
             list: task.list,
             title: task.title,
             isDone: false,
@@ -33,7 +34,7 @@ export default {
             color: task.color,
             src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU'
         }
-        await firebase.database().ref(`/user/${uid}/tasks/${task.title}`).set(newTask)
+        await firebase.database().ref(`/user/${uid}/tasks/${task.uuid}`).set(newTask)
         // Update tasklist isDone, count, updated
       } catch (e){
         throw e
@@ -51,7 +52,7 @@ export default {
     async deleteTaskAsync({dispatch, commit}, task) {
       try{
         const uid = await dispatch('getUid')
-        await firebase.database().ref(`/user/${uid}/tasks/${task.title}`).remove()
+        await firebase.database().ref(`/user/${uid}/tasks/${task.uuid}`).remove()
         commit('deleteTasks', task)
       } catch (e){
         throw e
@@ -72,7 +73,7 @@ export default {
             color: task.color,
             src: task.src
         }
-        await firebase.database().ref(`/user/${uid}/tasks/${task.lastName}`).set(taskToChange)
+        await firebase.database().ref(`/user/${uid}/tasks/${task.uuid}`).set(taskToChange)
         commit('updateTask', task)
       } catch (e){
         throw e

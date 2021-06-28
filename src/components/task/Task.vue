@@ -3,7 +3,7 @@
     <v-app-bar dark color="deep-purple accent-4">
       <v-app-bar-nav-icon @click="$emit('toggleTaskList')"></v-app-bar-nav-icon>
       <v-toolbar-title v-if="$vuetify.breakpoint.name !== 'xs'"
-        ><strong v-if="$route.params.listName">{{ $route.params.listName.toUpperCase() }} - </strong> List</v-toolbar-title
+        ><strong v-if="$route.params.listUUID">{{ $route.params.listUUID.toUpperCase() }} - </strong> List</v-toolbar-title
       >
       <v-spacer></v-spacer>
       <v-text-field class="mt-4" v-model="taskFind" label="Find Task">
@@ -95,6 +95,7 @@
         </v-col>
         <v-col cols="10" class="mx-auto">
           <v-btn
+            v-if="$route.params.listUUID"
             dark
             @click="dialog = !dialog"
             color="deep-purple accent-4"
@@ -125,6 +126,7 @@
 
 <script>
 import TaskEdit from './TaskEdit.vue'
+import genUUID from '@/../scripts/UUID.js'
 
 export default {
   data () {
@@ -138,6 +140,7 @@ export default {
   components: {
     TaskEdit
   },
+  mixins: [genUUID],
   methods: {
     async logout () {
       await this.$store.dispatch('logout')
@@ -163,6 +166,7 @@ export default {
     },
     addTask (task) {
       const newTask = {
+        uuid: this.generateUUID(),
         color: task.color || '#952175',
         src:
           task.src ||
@@ -177,7 +181,7 @@ export default {
             .replace(/-/g, '/'),
         priority: task.priority,
         isDone: task.isDone || false, // catch is done
-        list: this.$route.params.listName
+        list: this.$route.params.listUUID
       }
       if (this.id !== null) {
         newTask.lastName = this.tasks[this.id].title
@@ -193,7 +197,7 @@ export default {
   computed: {
     sortedTasks () {
       return this.tasks?.filter(
-        item => item.list === this.$route.params.listName
+        item => item.list === this.$route.params.listUUID
       )
     }
   },

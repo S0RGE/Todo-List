@@ -16,7 +16,7 @@ const routes = [
     component: () => import('@/components/task/Task.vue')
   },
   {
-    path: '/task/:listName',
+    path: '/task/:listUUID',
     name: 'TaskId',
     component: () => import('@/views/Home.vue')
   },

@@ -1,5 +1,6 @@
 /* eslint-disable */
 import firebase from 'firebase/app'
+import getUUID from '@/../scripts/UUID.js'
 
 export default {
   state: {
@@ -11,20 +12,26 @@ export default {
     },
     addToTaskList (state, list) {
       state.taskList.push(list)
+    },
+    deleteTaskList (state, list) {
+      const taskListIdx = state.taskList.indexOf(list)
+      state.taskList.splice(taskListIdx, 1)
     }
   },
+  mixins: [getUUID],
   actions: {
     async addTodoListAsync({ dispatch, commit }, list ){
       try{
         const uid = await dispatch('getUid')
         const newList = {
-            name: list,
+            name: list.name,
+            uuid: list.uuid,
             count: 0,
             isDone: false,
             created: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
             updated: new Date().toJSON().slice(0,10).replace(/-/g,'/')
         }
-        await firebase.database().ref(`/user/${uid}/lists/${list}`).set(newList)
+        await firebase.database().ref(`/user/${uid}/lists/${newList.uuid}`).set(newList)
         commit('addToTaskList', newList)
       } catch (e){
         throw e
@@ -36,6 +43,15 @@ export default {
         const uid = await dispatch('getUid')
         const taskList = (await firebase.database().ref(`/user/${uid}/lists`).once('value')).val() || []
         commit('setTaskLists', Object.values(taskList))
+      } catch (e){
+        throw e
+      }
+    },
+    async deleteTaskListById( {dispatch, commit}, taskList){
+      try{
+        const uid = await dispatch('getUid')
+        await firebase.database().ref(`/user/${uid}/lists/${taskList.name}`).remove()
+        commit('deleteTaskList', taskList)
       } catch (e){
         throw e
       }

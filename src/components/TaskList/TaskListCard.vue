@@ -25,7 +25,7 @@
 
         <v-card-actions>
             <v-btn
-            @click="closeTaskListForm"
+            @click="deleteTaskList"
             rounded
             dark
             color="deep-purple accent-4">Delete</v-btn>
@@ -45,6 +45,10 @@ export default {
   methods: {
     closeTaskListForm () {
       this.$emit('closeTaskListForm')
+    },
+    deleteTaskList () {
+      this.$store.dispatch('deleteTaskListById', this.taskList)
+      this.closeTaskListForm()
     }
   }
 }

@@ -22,7 +22,7 @@
           >
             <v-list-item-content>
               <router-link
-                :to="{name: 'TaskId', params: {listName: list.name}}"
+                :to="{name: 'TaskId', params: {listUUID: list.uuid}}"
               >
               <v-btn
               width="100%"
@@ -77,6 +77,8 @@
 
 <script>
 import TaskListCard from './TaskListCard'
+import UUID from '@/../scripts/UUID.js'
+
 export default {
   props: ['tasksList'],
   data () {
@@ -92,6 +94,7 @@ export default {
   components: {
     TaskListCard
   },
+  mixins: [UUID],
   methods: {
     closeTaskListForm () {
       this.taskListCardDialog = false
@@ -101,7 +104,7 @@ export default {
         icon: 'mdi-inbox',
         text: this.taskList
       })
-      this.$store.dispatch('addTodoListAsync', this.taskList)
+      this.$store.dispatch('addTodoListAsync', { name: this.taskList, uuid: this.generateUUID() })
       this.taskList = ''
     },
     editTaskList (list) {
@@ -115,7 +118,7 @@ export default {
       return this.tasksList.filter(item => item.name.toLowerCase().includes(this.searchField.toLowerCase()))
     },
     editedTaskList () {
-      return this.tasksList.find(list => list.name === this.$route.params.listName)
+      return this.tasksList.find(list => list.uuid === this.$route.params.listUUID)
     }
   }
 }
