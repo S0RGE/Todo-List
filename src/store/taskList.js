@@ -50,7 +50,7 @@ export default {
     async deleteTaskListById( {dispatch, commit}, taskList){
       try{
         const uid = await dispatch('getUid')
-        await firebase.database().ref(`/user/${uid}/lists/${taskList.name}`).remove()
+        await firebase.database().ref(`/user/${uid}/lists/${taskList.uuid}`).remove()
         commit('deleteTaskList', taskList)
       } catch (e){
         throw e

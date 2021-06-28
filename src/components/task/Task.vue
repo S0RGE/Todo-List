@@ -150,8 +150,8 @@ export default {
       const doneId = this.tasks.indexOf(task)
       this.tasks[doneId].isDone = !this.tasks[doneId].isDone
     },
-    editTask (i) {
-      this.id = i
+    editTask (idx) {
+      this.id = idx
       this.dialog = true
     },
     closeForm () {
@@ -166,7 +166,7 @@ export default {
     },
     addTask (task) {
       const newTask = {
-        uuid: this.generateUUID(),
+        uuid: this.tasks[task.id].uuid || this.generateUUID(),
         color: task.color || '#952175',
         src:
           task.src ||
@@ -180,12 +180,10 @@ export default {
             .slice(0, 10)
             .replace(/-/g, '/'),
         priority: task.priority,
-        isDone: task.isDone || false, // catch is done
+        isDone: task.isDone || false,
         list: this.$route.params.listUUID
       }
       if (this.id !== null) {
-        newTask.lastName = this.tasks[this.id].title
-        console.log('addTask', this.tasks[this.id].title)
         this.$store.dispatch('editTaskAsync', newTask)
         this.tasks.splice(this.id, 1, newTask)
       } else {
