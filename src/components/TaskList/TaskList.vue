@@ -46,6 +46,7 @@
       label="Add Task List"
       class="mx-2"
       v-model="taskList"
+      v-on:keyup.enter="addTaskList()"
       >
        <v-icon
         v-if="taskList"
@@ -68,6 +69,7 @@
   v-model="taskListCardDialog">
   <TaskListCard
   :taskList="editedTaskList"
+  @closeTaskListForm="closeTaskListForm"
   />
   </v-dialog>
 </v-container>
@@ -90,6 +92,9 @@ export default {
     TaskListCard
   },
   methods: {
+    closeTaskListForm () {
+      this.taskListCardDialog = false
+    },
     addTaskList () {
       this.lists.push({
         icon: 'mdi-inbox',

@@ -8,7 +8,7 @@
       color="deep-purple accent-4"
     >
       <v-app-bar-nav-icon @click="$emit('toggleTaskList')"></v-app-bar-nav-icon>
-      <v-toolbar-title v-if="$vuetify.breakpoint.name !== 'xs'">My TaskList</v-toolbar-title>
+      <v-toolbar-title v-if="$vuetify.breakpoint.name !== 'xs'">{{ $route.params.listName.toUpperCase() }} - Task List</v-toolbar-title>
       <v-spacer></v-spacer>
        <v-text-field
             class="mt-4"
@@ -33,23 +33,23 @@
     <v-container>
       <v-row dense>
         <v-col
-          v-for="(item, i) in sortedTasks"
+          v-for="(task, i) in sortedTasks"
           :key="i"
           cols="10"
           class="mx-auto"
         >
           <v-card
             dark
-            :color="item.isDone? 'grey' : 'deep-purple accent-4'"
+            :color="task.isDone? 'grey' : 'deep-purple accent-4'"
           >
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
                 <v-card-title
                   class="text-h5"
-                  :class="{ priorityItem: item.priority }"
-                  v-text="item.title"
-                >{{ item.title }}</v-card-title>
-                <v-card-subtitle v-text="item.description"></v-card-subtitle>
+                  :class="{ priorityItem: task.priority }"
+                  v-text="task.title"
+                >{{ task.title }}</v-card-title>
+                <v-card-subtitle v-text="task.description"></v-card-subtitle>
                 <v-card-actions>
                   <v-btn
                     class="ml-2 mt-5"
@@ -65,7 +65,7 @@
                     outlined
                     rounded
                     small
-                    @click="deleteTask(item)"
+                    @click="deleteTask(task)"
                   >
                     Delete Task
                   </v-btn>
@@ -74,7 +74,7 @@
                     outlined
                     rounded
                     small
-                    @click="doneTask(item)"
+                    @click="doneTask(task)"
                   >
                     Done Task
                   </v-btn>
@@ -86,7 +86,7 @@
                 size="125"
                 tile
               >
-                <v-img @click="editPicture()" style="cursor: pointer" :src="item.src"></v-img>
+                <v-img @click="editPicture()" style="cursor: pointer" :src="task.src"></v-img>
               </v-avatar>
             </div>
           </v-card>
@@ -147,7 +147,6 @@ export default {
     doneTask (task) {
       const doneId = this.tasks.indexOf(task)
       this.tasks[doneId].isDone = !this.tasks[doneId].isDone
-      console.log('Done task', this.tasks[doneId])
     },
     editTask (i) {
       this.id = i
@@ -176,11 +175,9 @@ export default {
       }
       if (this.id !== null) {
         newTask.lastName = this.tasks[this.id].title
-        console.log('not null', newTask.lastName)
         this.$store.dispatch('editTaskAsync', newTask) // Add previous task name to change
         this.tasks.splice(this.id, 1, newTask)
       } else {
-        console.log('null')
         this.$store.dispatch('addTodoTask', newTask)
         this.tasks.push(newTask)
       }

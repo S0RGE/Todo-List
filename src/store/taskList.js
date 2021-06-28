@@ -14,7 +14,7 @@ export default {
     }
   },
   actions: {
-    async addTodoList({ dispatch, commit }, list ){
+    async addTodoListAsync({ dispatch, commit }, list ){
       try{
         const uid = await dispatch('getUid')
         const newList = {
