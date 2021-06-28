@@ -40,7 +40,7 @@
         >
           <v-card
             dark
-            color="deep-purple accent-4"
+            :color="item.isDone? 'grey' : 'deep-purple accent-4'"
           >
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
@@ -68,6 +68,15 @@
                     @click="deleteTask(item)"
                   >
                     Delete Task
+                  </v-btn>
+                  <v-btn
+                    class="ml-2 mt-5"
+                    outlined
+                    rounded
+                    small
+                    @click="doneTask(item)"
+                  >
+                    Done Task
                   </v-btn>
                 </v-card-actions>
               </div>
@@ -134,6 +143,11 @@ export default {
     async logout () {
       await this.$store.dispatch('logout')
       this.$router.push({ name: 'Login' })
+    },
+    doneTask (task) {
+      const doneId = this.tasks.indexOf(task)
+      this.tasks[doneId].isDone = !this.tasks[doneId].isDone
+      console.log('Done task', this.tasks[doneId])
     },
     editTask (i) {
       this.id = i

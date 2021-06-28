@@ -19,7 +19,7 @@ const fs = require("fs");
     await execa("git", ["checkout", "-f", "master"]);
     await execa("git", ["branch", "-D", "gh-pages"]);
     console.log("Successfully deployed");
-    await execa("git", ["checkout", "main"]);
+    await execa("git", ["checkout", "main", "--force"]);
     console.log("Returned to main");
   } catch (e) {
     console.log(e.message);
