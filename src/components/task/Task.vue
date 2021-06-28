@@ -3,7 +3,7 @@
     <v-app-bar dark color="deep-purple accent-4">
       <v-app-bar-nav-icon @click="$emit('toggleTaskList')"></v-app-bar-nav-icon>
       <v-toolbar-title v-if="$vuetify.breakpoint.name !== 'xs'"
-        ><strong v-if="$route.params.listUUID">{{ $route.params.listUUID.toUpperCase() }} - </strong> List</v-toolbar-title
+        >List</v-toolbar-title
       >
       <v-spacer></v-spacer>
       <v-text-field class="mt-4" v-model="taskFind" label="Find Task">
@@ -166,7 +166,7 @@ export default {
     },
     addTask (task) {
       const newTask = {
-        uuid: this.tasks[task.id].uuid || this.generateUUID(),
+        uuid: this.tasks[task.id]?.uuid || this.generateUUID(),
         color: task.color || '#952175',
         src:
           task.src ||
