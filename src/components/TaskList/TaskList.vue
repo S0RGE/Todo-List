@@ -17,21 +17,26 @@
         </v-text-field>
         <v-list-item-group v-model="model" max-height>
           <v-list-item
-            v-for="(item, i) in searchResults"
-            :key="i"
+            v-for="(list, idx) in searchResults"
+            :key="idx"
           >
-            <!-- <v-list-item-icon>
-              <v-icon v-text="item.icon"></v-icon>
-            </v-list-item-icon> -->
             <v-list-item-content>
               <router-link
-                :to="{name: 'TaskId', params: {listName: item.name}}"
+                :to="{name: 'TaskId', params: {listName: list.name}}"
               >
               <v-btn
               width="100%"
               dark
               color="deep-purple accent-4"
-              >{{ item.name }} </v-btn>
+              >
+                {{ list.name }}
+                <v-divider></v-divider>
+              <v-icon
+              right
+              dark
+              @click="editTaskList(list)"
+              >mdi-pencil</v-icon>
+              </v-btn>
               </router-link>
             </v-list-item-content>
           </v-list-item>
@@ -59,34 +64,51 @@
       >Add List</v-btn>
     </v-card-actions>
   </v-card>
+  <v-dialog
+  v-model="taskListCardDialog">
+  <TaskListCard
+  :taskList="editedTaskList"
+  />
+  </v-dialog>
 </v-container>
 </template>
 
 <script>
-
+import TaskListCard from './TaskListCard'
 export default {
   props: ['tasksList'],
   data () {
     return {
-      items: [],
+      taskListCardDialog: false,
+      lists: [],
       model: 1,
       taskList: '',
       searchField: ''
     }
   },
+  components: {
+    TaskListCard
+  },
   methods: {
     addTaskList () {
-      this.items.push({
+      this.lists.push({
         icon: 'mdi-inbox',
         text: this.taskList
       })
-      this.$store.dispatch('addTodoList', this.taskList)
+      this.$store.dispatch('addTodoListAsync', this.taskList)
       this.taskList = ''
+    },
+    editTaskList (list) {
+      this.taskListCardDialog = !this.taskListCardDialog
+      // this.$store.dispatch('updateTaskListAsync', list) // set lastName to list
     }
   },
   computed: {
     searchResults () {
       return this.tasksList.filter(item => item.name.toLowerCase().includes(this.searchField.toLowerCase()))
+    },
+    editedTaskList () {
+      return this.tasksList.find(list => list.name === this.$route.params.listName)
     }
   }
 }
