@@ -34,7 +34,7 @@
               <v-icon
               right
               dark
-              @click="editTaskList(list)"
+              @click.prevent="editTaskList(list)"
               >mdi-pencil</v-icon>
               </v-btn>
               </router-link>
@@ -68,7 +68,7 @@
   <v-dialog
   v-model="taskListCardDialog">
   <TaskListCard
-  :taskList="editedTaskList"
+  :taskList="list"
   @closeTaskListForm="closeTaskListForm"
   />
   </v-dialog>
@@ -85,7 +85,8 @@ export default {
       lists: [],
       model: 1,
       taskList: '',
-      searchField: ''
+      searchField: '',
+      list: '' // TODO: dog-nail
     }
   },
   components: {
@@ -104,6 +105,7 @@ export default {
       this.taskList = ''
     },
     editTaskList (list) {
+      this.list = list
       this.taskListCardDialog = !this.taskListCardDialog
       // this.$store.dispatch('updateTaskListAsync', list) // set lastName to list
     }

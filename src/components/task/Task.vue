@@ -3,7 +3,7 @@
     <v-app-bar dark color="deep-purple accent-4">
       <v-app-bar-nav-icon @click="$emit('toggleTaskList')"></v-app-bar-nav-icon>
       <v-toolbar-title v-if="$vuetify.breakpoint.name !== 'xs'"
-        >{{ $route.params.listName.toUpperCase() }} - Task List</v-toolbar-title
+        ><strong v-if="$route.params.listName">{{ $route.params.listName.toUpperCase() }} - </strong> List</v-toolbar-title
       >
       <v-spacer></v-spacer>
       <v-text-field class="mt-4" v-model="taskFind" label="Find Task">

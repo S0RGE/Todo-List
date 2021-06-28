@@ -37,6 +37,7 @@
             type="password"
             outlined
             label="Password"
+            v-on:keyup.enter="login()"
           ></v-text-field>
         </v-col>
         <v-btn color="deep-purple accent-4" class="ma-3" dark @click="login">
