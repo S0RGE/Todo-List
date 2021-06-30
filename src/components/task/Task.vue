@@ -158,13 +158,13 @@ export default {
       this.id = null
       this.dialog = false
     },
-    deleteTask (task) {
-      this.$store.dispatch('deleteTaskAsync', task)
+    async deleteTask (task) {
+      await this.$store.dispatch('deleteTaskAsync', task)
     },
     editPicture () {
       console.error('not implement exception')
     },
-    addTask (task) {
+    async addTask (task) {
       const newTask = {
         uuid: this.tasks[task.id]?.uuid || this.generateUUID(),
         color: task.color || '#952175',
@@ -184,10 +184,10 @@ export default {
         list: this.$route.params.listUUID
       }
       if (this.id !== null) {
-        this.$store.dispatch('editTaskAsync', newTask)
+        await this.$store.dispatch('editTaskAsync', newTask)
         this.tasks.splice(this.id, 1, newTask)
       } else {
-        this.$store.dispatch('addTodoTask', newTask)
+        await this.$store.dispatch('addTodoTask', newTask)
         this.tasks.push(newTask)
       }
     }

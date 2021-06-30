@@ -26,12 +26,12 @@
         <v-card-actions>
             <v-btn
             @click="deleteTaskList"
-            rounded
+            width="48%"
             dark
             color="deep-purple accent-4">Delete</v-btn>
             <v-btn
             @click="closeTaskListForm"
-            rounded
+            width="48%"
             dark
             color="deep-purple accent-4">Edit</v-btn>
         </v-card-actions>
@@ -46,8 +46,15 @@ export default {
     closeTaskListForm () {
       this.$emit('closeTaskListForm')
     },
-    deleteTaskList () {
-      this.$store.dispatch('deleteTaskListById', this.taskList)
+    async deleteTaskList () {
+      await this.$store.dispatch('deleteTaskListById', this.taskList)
+      const tasks = this.$store.getters.getTasks.filter(task => task.list === this.taskList.uuid)
+      for (let index = 0; index < tasks.length; index++) {
+        await this.$store.dispatch('deleteTaskByListAsync', tasks[index].uuid)
+      }
+      if (this.$route.name !== 'Home') {
+        this.$router.push({ name: 'Home' })
+      }
       this.closeTaskListForm()
     }
   }

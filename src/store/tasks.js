@@ -6,6 +6,9 @@ export default {
     tasks: []
   },
   mutations: {
+    deleteTasksByUuid: (state, uuid) => {
+      state.tasks = state.tasks.filter(task => task.list !== uuid)
+    },
     setTasks: (state, tasks) => state.tasks = tasks,
     deleteTasks: (state, task) => {
       const taskId = state.tasks.indexOf(task)
@@ -77,9 +80,18 @@ export default {
       } catch (e){
         throw e
       }
+    },
+    async deleteTaskByListAsync({dispatch, commit}, uuid){
+      try{
+        const uid = await dispatch('getUid')
+        await firebase.database().ref(`/user/${uid}/tasks/${uuid}`).remove()
+        commit('deleteTasksByUuid', uuid)
+      } catch (e){
+        throw e
+      }
     }
   },
   getters : {
-    getTasks: t => t.tasks 
+    getTasks: state => state.tasks
   }
 }

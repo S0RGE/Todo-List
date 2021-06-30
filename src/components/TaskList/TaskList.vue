@@ -66,6 +66,7 @@
     </v-card-actions>
   </v-card>
   <v-dialog
+  max-width="400"
   v-model="taskListCardDialog">
   <TaskListCard
   :taskList="list"
@@ -110,7 +111,6 @@ export default {
     editTaskList (list) {
       this.list = list
       this.taskListCardDialog = !this.taskListCardDialog
-      // this.$store.dispatch('updateTaskListAsync', list) // set lastName to list
     }
   },
   computed: {

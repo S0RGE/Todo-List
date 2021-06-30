@@ -16,11 +16,15 @@ export default {
     deleteTaskList (state, list) {
       const taskListIdx = state.taskList.indexOf(list)
       state.taskList.splice(taskListIdx, 1)
+    },
+    editTaskListById (state, list) {
+      const taskListIdx = state.taskList.indexOf(list)
+      state.taskList.splice(taskListIdx, 1, list)
     }
   },
   mixins: [getUUID],
   actions: {
-    async addTodoListAsync({ dispatch, commit }, list ){
+    async addTodoListAsync ({ dispatch, commit }, list ){
       try{
         const uid = await dispatch('getUid')
         const newList = {
@@ -38,7 +42,7 @@ export default {
       }
       
     },
-    async getTaskListByUser({ dispatch, commit }){
+    async getTaskListByUser ({ dispatch, commit }){
       try{
         const uid = await dispatch('getUid')
         const taskList = (await firebase.database().ref(`/user/${uid}/lists`).once('value')).val() || []
@@ -47,7 +51,7 @@ export default {
         throw e
       }
     },
-    async deleteTaskListById( {dispatch, commit}, taskList){
+    async deleteTaskListById ( {dispatch, commit}, taskList){
       try{
         const uid = await dispatch('getUid')
         await firebase.database().ref(`/user/${uid}/lists/${taskList.uuid}`).remove()
@@ -55,6 +59,9 @@ export default {
       } catch (e){
         throw e
       }
+    },
+    async editTaskListByIdAsync ({ dispatch, commit }, taskList ) {
+      console.error('Not implemented exception')
     }
   },
   getters: {
