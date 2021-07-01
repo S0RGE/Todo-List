@@ -46,7 +46,8 @@
 <script>
 export default {
   props: [
-    'id'
+    'id',
+    'task'
   ],
   data () {
     return {
@@ -58,7 +59,12 @@ export default {
   },
   methods: {
     editTask () {
-      this.$emit('addTask', { taskName: this.taskName, taskDescription: this.taskDescription, id: this.id, priority: this.priority })
+      this.$emit('addTask', {
+        taskName: this.taskName,
+        taskDescription: this.taskDescription,
+        id: this.id,
+        priority: this.priority
+      })
       this.taskName = this.taskDescription = ''
       this.priority = false
       this.closeForm()
@@ -66,6 +72,11 @@ export default {
     closeForm () {
       this.$emit('closeForm')
     }
+  },
+  mounted () { // TODO: do not work correctly
+    this.taskName = this.task.title
+    this.taskDescription = this.task.description
+    this.priority = this.task.priority
   }
 }
 </script>

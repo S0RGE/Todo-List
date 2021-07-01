@@ -115,7 +115,12 @@
           <v-card>
             <v-toolbar color="deep-purple accent-4" dark>Edit Task</v-toolbar>
             <v-card-text>
-              <TaskEdit :id="id" @closeForm="closeForm()" @addTask="addTask" />
+              <TaskEdit
+              :id="id"
+              :task="tasks[id]"
+              @closeForm="closeForm()"
+              @addTask="addTask"
+              />
             </v-card-text>
           </v-card>
         </template>
@@ -185,10 +190,8 @@ export default {
       }
       if (this.id !== null) {
         await this.$store.dispatch('editTaskAsync', newTask)
-        this.tasks.splice(this.id, 1, newTask)
       } else {
         await this.$store.dispatch('addTodoTask', newTask)
-        this.tasks.push(newTask)
       }
     }
   },
@@ -200,7 +203,7 @@ export default {
     }
   },
   async mounted () {
-    await this.$store.dispatch('getTasks')
+    await this.$store.dispatch('getTasksAsync') // TODO: another way to do ?
     this.tasks = this.$store.getters.getTasks
   }
 }

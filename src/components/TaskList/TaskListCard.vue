@@ -48,7 +48,7 @@ export default {
     },
     async deleteTaskList () {
       await this.$store.dispatch('deleteTaskListById', this.taskList)
-      const tasks = this.$store.getters.getTasks.filter(task => task.list === this.taskList.uuid)
+      const tasks = this.$store.getters.getTasksAsync.filter(task => task.list === this.taskList.uuid)
       for (let index = 0; index < tasks.length; index++) {
         await this.$store.dispatch('deleteTaskByListAsync', tasks[index].uuid)
       }

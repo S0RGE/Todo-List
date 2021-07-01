@@ -14,8 +14,8 @@ export default {
       const taskId = state.tasks.indexOf(task)
       state.tasks.splice(taskId, 1)
     },
-    updateTask: (state, task) => {
-      const taskId = state.tasks.indexOf(task)
+    editTask: (state, task) => {
+      const taskId = state.tasks.indexOf(state.tasks.find(t=> t.uuid === task.uuid)) // TODO: less expensive method?
       state.tasks.splice(taskId, 1, task)
     }
   },
@@ -36,12 +36,11 @@ export default {
             src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU'
         }
         await firebase.database().ref(`/user/${uid}/tasks/${newTask.uuid}`).set(newTask)
-        // Update tasklist isDone, count, updated
       } catch (e){
         throw e
       }
     },
-    async getTasks({ dispatch, commit }){
+    async getTasksAsync({ dispatch, commit }){
       try{
         const uid = await dispatch('getUid')
         const tasks = (await firebase.database().ref(`/user/${uid}/tasks`).once('value')).val() || []
@@ -61,7 +60,6 @@ export default {
     },
     async editTaskAsync({dispatch, commit}, task ) {
       try{
-        console.log('editTaskAsync', task)
         const uid = await dispatch('getUid')
         const taskToChange = {
             uuid: task.uuid,
@@ -76,7 +74,7 @@ export default {
             src: task.src
         }
         await firebase.database().ref(`/user/${uid}/tasks/${taskToChange.uuid}`).set(taskToChange)
-        commit('updateTask', task)
+        commit('editTask', task)
       } catch (e){
         throw e
       }
