@@ -63,7 +63,7 @@ export default {
         taskName: this.taskName,
         taskDescription: this.taskDescription,
         id: this.id,
-        priority: this.priority
+        priority: this.priority || false
       })
       this.taskName = this.taskDescription = ''
       this.priority = false
@@ -74,9 +74,9 @@ export default {
     }
   },
   mounted () { // TODO: do not work correctly
-    this.taskName = this.task.title
-    this.taskDescription = this.task.description
-    this.priority = this.task.priority
+    this.taskName = this.task?.title
+    this.taskDescription = this.task?.description
+    this.priority = this.task?.priority
   }
 }
 </script>

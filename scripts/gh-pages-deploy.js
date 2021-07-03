@@ -16,11 +16,9 @@ const fs = require("fs");
     console.log("Pushing to gh-pages...");
     await execa("git", ["push", "origin", "HEAD:gh-pages", "--force"]);
     await execa("rm", ["-r", folderName]);
-    await execa("git", ["checkout", "-f", "master"]);
+    await execa("git", ["checkout", "-f", "main"]);
     await execa("git", ["branch", "-D", "gh-pages"]);
     console.log("Successfully deployed");
-    await execa("git", ["checkout", "main", "--force"]);
-    console.log("Returned to main");
   } catch (e) {
     console.log(e.message);
     process.exit(1);

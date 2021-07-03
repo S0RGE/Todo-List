@@ -6,6 +6,9 @@ export default {
     tasks: []
   },
   mutations: {
+    addTask: (state, task) => {
+      state.tasks.push(task)
+    },
     deleteTasksByUuid: (state, uuid) => {
       state.tasks = state.tasks.filter(task => task.list !== uuid)
     },
@@ -36,6 +39,7 @@ export default {
             src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlUGwpR2u_hnvnP0q2r-F8UoAYsTaWDz2aSg&usqp=CAU'
         }
         await firebase.database().ref(`/user/${uid}/tasks/${newTask.uuid}`).set(newTask)
+        commit('addTask', newTask)
       } catch (e){
         throw e
       }
