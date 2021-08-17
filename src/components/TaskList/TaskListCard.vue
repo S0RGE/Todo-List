@@ -46,7 +46,7 @@ export default {
       this.$emit('closeTaskListForm')
     },
     async deleteTaskList () {
-      this.$store.dispatch('deleteTaskListById', this.taskList)
+      await this.$store.dispatch('deleteTaskListById', this.taskList)
       const tasks = this.$store.getters.getTasks.filter(task => task.list === this.taskList.uuid)
       if (tasks?.length > 0) {
         for (let index = 0; index < tasks.length; index++) {
@@ -55,7 +55,7 @@ export default {
       }
       this.closeTaskListForm()
       if (this.$route.name !== 'Home') {
-        this.$router.push({ name: 'Home' })
+        await this.$router.push({ name: 'Home' })
       }
     }
   }

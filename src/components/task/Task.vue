@@ -21,7 +21,7 @@
     <v-container>
       <v-row dense>
         <v-col
-          v-for="(task, i) in sortedTasks"
+          v-for="(task, i) in filteredTasks"
           :key="i"
           cols="10"
           class="mx-auto"
@@ -149,7 +149,7 @@ export default {
   methods: {
     async logout () {
       await this.$store.dispatch('logout')
-      this.$router.push({ name: 'Login' })
+      await this.$router.push({ name: 'Login' })
     },
     doneTask (task) {
       const doneId = this.tasks.indexOf(task)
@@ -196,6 +196,9 @@ export default {
     }
   },
   computed: {
+    filteredTasks () {
+      return this.sortedTasks.filter(task => task.title.toLowerCase().includes(this.taskFind.toLowerCase()))
+    },
     sortedTasks () {
       return this.tasks?.filter(
         item => item.list === this.$route.params.listUUID
