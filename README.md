@@ -1,7 +1,7 @@
 # todo-list
-# My first Vue app
-# Vue 2, Vuex, Vuetify, Firebase
-# CI/CD
+## My first Vue app
+## Vue 2, Vuex, Vuetify, Firebase
+## CI/CD
 
 ## Project setup
 ```
